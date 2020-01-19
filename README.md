@@ -21,9 +21,7 @@ Une difficulté s'est rapidement présentée à moi. Les pdfs sont en effet des 
 
 Pendant mes recherches, je suis tombé dans un forum (https://www.developpez.net/forums/d1599202/autres-langages/python/general-python/extraire-contenu-d-pdf-python/) sur ce message qui a failli me faire abandonner l'idée de travailler directement à partir du pdf : 
 
-```
-PDF is evil. Although it is called a PDF "document", it's nothing like Word or HTML document. PDF is more like a graphic representation. PDF contents are just a bunch of instructions that tell how to place the stuff at each exact position on a display or paper. In most cases, it has no logical structure such as sentences or paragraphs and it cannot adapt itself when the paper size changes. PDFMiner attempts to reconstruct some of those structures by guessing from its positioning, but there's nothing guaranteed to work. Ugly, I know. Again, PDF is evil.
-```
+    _"PDF is evil. Although it is called a PDF "document", it's nothing like Word or HTML document. PDF is more like a graphic  representation. PDF contents are just a bunch of instructions that tell how to place the stuff at each exact position on a display or paper. In most cases, it has no logical structure such as sentences or paragraphs and it cannot adapt itself when the paper size changes. PDFMiner attempts to reconstruct some of those structures by guessing from its positioning, but there's nothing guaranteed to work. Ugly, I know. Again, PDF is evil."_
 
 
 ```
