@@ -75,7 +75,13 @@ Ici, la fonction "RegexpTokenizer" nous permet ici de désigner un mode de toké
 Une autre tâche classique de prétraitement de texte avec nltk consiste à retirer les stopwords, c'est à dire les mots courant tels que "ce", "un", "ou", qui ne sont pas porteurs de sens. Bien qu'ils ne soient pas utiles à notre tâche, il ne me semblait pas fondamentalement nécessaire de retier ces stopwords. De plus, je souhaitais que le programme puisse fonctionner autant sur des articles en anglais que sur des articles en français, ce qui aurait rendu compliqué la tâche si j'avais souhaité retirer les stopwords, puisqu'il aurait été nécessaire de détecter la langue afin de savoir quelle liste de stopwords utiliser, ou alors de retirer les stopwords des deux langues, ce qui pourrait potentiellement biaiser la tâche (par exemple si je cherche des articles en français sur le sens de l'agentivité dans le sport collectif et que j'ulitise le mot "but" comme mot clef, celui si serait retiré de la liste parce qu'il s'agit d'un stopword anglais). 
 
 ## 3) keyword_test
+À partir de la liste de mots obtenue il est maintenant possible de rechercher la présence du mot clef demandé. Pour ce faire, j'ai créé la fonction keyword_test retournant une liste contenant les noms de tous les articles d'intérêts, c'est à dire des articles présentant le mot clef au moins le nombre souhaité de fois dans ses 500 premiers mots. 
 
+J'ai choisi de traiter les 500 premiers mots de l'articles et non pas l'ensemble du contenu textule afin de me traiter un nombre fixe de mots pour chaque articles (évitant ainsi de biaiser le résultat à cause de différences de contenu textuel pour des articles différents, un article de 30 pages ayant bien plus de chance de contenir un mot donné qu'un article de 3 pages) et pour traiter une liste de mot qui contient systématiquement l'abstract. 
+
+De plus, plutôt que partir du texte traité, j'ai décidé d'inclure dans cette troisième fonction les deux fonctions définies précédemment, ce qui m'a évité de devoir remonter à l'article à partir de son contenu textuel. Le fait d'inclure les deux fonctions précédente m'a en effet permis de partir de la liste d'articles présents dans le dossier, ce qui facilite grandement la tâche. 
+
+La fonction est alors définie comme il suit :
 ```
 def keyword_test(liste_d_articles, key, nombre):
     #crée une liste contenant tous les acticles dont l'occurence du mot clef dans les 500 premiers mots est supérieure au         nombre souhaité 
@@ -93,6 +99,8 @@ def keyword_test(liste_d_articles, key, nombre):
         compteur = 0
     return articles_recherchés
 ```
+Cette fonction nécessite trois arguments : une liste contenant les noms de l'ensemble des articles à analyser (liste_d_articles), un mot clef (key, string), et une occuence souhaitée du mot clef (nombre, integer). 
+Dans une première boucle for, keyword_test appelle pour chaque articles les fonctions pdfparser puis pre_traitement pour ensuite créer une liste contenant les 500 premiers mots du texte traité. Ensuite, cette liste est analysée dans une seconde boucle for. Pour chaque mot de la liste, cette dernière boucle teste sa correspondance avec le mot clef. Si le mot correspond, on ajoute +1 à un compteur définit précédement et initialisé à 0. Lorsque le compteur atteint le nombre recherché, on peut alors ajouter l'article analysé à la liste d'article recherchés (articles_recherchés) initialisée précédemment comme une liste vide, pour ensuite remettre le compteur à zéro, et recommencer le processus sur le prochain article de la liste, et ce jusqu'à ce que tous les articles aient été traités. 
 
 ## 4) create_final_folder
 
