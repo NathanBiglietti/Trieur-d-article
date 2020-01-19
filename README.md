@@ -140,18 +140,26 @@ Lorsque c'est fait, la fonction "os.chdir()" appliquée au chemin absolu indiqu�
 
 Ensuite, la fonction "glob.glob()" permet créer une liste contenant les fichiers de notre dossier A_LIRE tout en ne retenant que les fichiers pdf, graçe à l'argument ".pdf" (il manque l'étoile mais c'est juste que si je la mets ça fout tout le texte en l'air en le mettant en italique). Par ce moyen, tout fichier autre que pdf qui se serait malencontreusement glissé dans le dossier ne sera pas analysé. Ainsi, même si vous avez par mégarde ajouté au dossier une photo de votre chat ou le film que vous avez téléchargé illégalement hier soir, ces derniers ne feront pas bugger le programme. 
 
-
+Pour le mot clef et l'occurence de ce dernier, j'ai procédé de la façon suivante :
 ```
 keyword = input("Entrez le mot clef :")
 #demande le mot clef
 
 occurence = int(input("Entrez l'occurence souhaitée du mot clef :"))
 #demande l'occurence souhaitée du mot clef
+```
+La fonction input() permet ici de demander dans la console la valeur que l'on souhaite assigner à aux objets keyword et occurence, tout en imprimant les instructions (indiquées comme argument de input(), entre guillemets). En outre, la fonction int() permet simplement de transformer la chaine de caractère indiqué ("2" par exemple) en nombre entier (2), les valeurs rentrées dans la console étant toujours des chaines de caractères. 
 
+On a à ce stade toutes les valeurs nécessaires à l'exécution des fonctions définies plus tôt : 
+```
 articles_recherchés = keyword_test(liste_de_pdf, keyword, occurence)
 
 create_final_folder(articles_recherchés)
+```
+On rappelle qu'on peut ici commencer directement par keyword_test() puisqu'elle utilise dans sa définition les fonctions pdfparser() et pre_traitement().
 
+Pour terminer, j'ai simplement fait imprimer sur la console une petite phrase résumant la tâche qui vient d'être effectuée, et quelques mots de politesse pour rendre l'interface un peu plus chaleureuse : 
+```
 articles_dans_dossier = str(articles_recherchés)
 print("Un nouveau dossier "+ keyword + " contenant les articles " + articles_dans_dossier + " a été créé dans votre dossier A_LIRE.")
 print("Merci, et à bientot !")
@@ -167,3 +175,5 @@ retirer les stop words + 500 mots + words.lower (sur tout les mots, plus efficac
 pb des premières pages 
 
 pb du path 
+
+crée un doc vide aussi si y'a pas d'artciles correspondant
