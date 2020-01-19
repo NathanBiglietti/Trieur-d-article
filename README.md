@@ -121,7 +121,9 @@ Avec la fonction "os.mkdir()", on crée un nouveau dossier portant le nom du mot
 Ensuite, j'ai créé une boucle for qui pour chaque article de la liste articles_recherchés va en créer une copie grâce à la fonction shutil.copy(), copie qui sera placée dans l'article nouvellement créé. L'argument " keyword + "/" + "copie_" + article " correspond à une façon d'indiquer systématiquement le bon path peu importe l'article et le mot clef. 
 
 ## 5) Instructions 
+Il ne nous reste plus maintenant qu'à utiliser les trois fonctions définies. Avant celà, trois informations sont nécessaire. Il nous faut une liste contenant les noms des articles à traiter, un mot clef et une occurence du mot clef.
 
+Plutôt que d'indiquer à chaque exécution le chemin absolu à suivre, j'ai décidé de l'indiquer dans le programme de manière systématique. Pour obtenir la liste des noms des articles à traiter, j'ai donc procédé de la façon suivante: 
 ```
 path = "/Users/macbookair/Desktop/A_LIRE"
 #chemin absolu vers le dossier contanant les articles au format .pdf
@@ -131,7 +133,15 @@ os.chdir(path)
 
 liste_de_pdf = glob.glob("*.pdf")
 #genère une liste contenant tous les noms des pdf du dossier
+```
+Je m'excuse par avance aux utilisateurs et utilisatrices de Windows et de Linux, mais j'ai indiqué ici un chemin absolu de mac. Si par chance vous avez comme moi le luxe de disposer d'un macbook air, il vous suffit de renommer votre dossier contenant vos articles "A_LIRE" et de le placer sur votre bureau. Si ce n'est pas le cas, le code n'est pas en tant que tel utilisable puisque le path ne correspond pas. Il faudra alors indiquer dans le programme le chemin absolu adéquat dirigeant vers le dossier, tout en prennant également soin de nommer ce dernier "A_LIRE". 
 
+Lorsque c'est fait, la fonction "os.chdir()" appliquée au chemin absolu indiqué changera le répertoire de travail pour le placer sur le dossier A_LIRE. Cela permet travailler facilement à l'intérieur du dossier sans à avoir à réindiquer systématiquement le chemin absolu. 
+
+Ensuite, la fonction "glob.glob()" permet créer une liste contenant les fichiers de notre dossier A_LIRE tout en ne retenant que les fichiers pdf, graçe à l'argument ".pdf" (il manque l'étoile mais c'est juste que si je la mets ça fout tout le texte en l'air en le mettant en italique). Par ce moyen, tout fichier autre que pdf qui se serait malencontreusement glissé dans le dossier ne sera pas analysé. Ainsi, même si vous avez par mégarde ajouté au dossier une photo de votre chat ou le film que vous avez téléchargé illégalement hier soir, ces derniers ne feront pas bugger le programme. 
+
+
+```
 keyword = input("Entrez le mot clef :")
 #demande le mot clef
 
@@ -156,3 +166,4 @@ retirer les stop words + 500 mots + words.lower (sur tout les mots, plus efficac
 
 pb des premières pages 
 
+pb du path 
