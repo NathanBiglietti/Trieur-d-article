@@ -77,7 +77,7 @@ Une autre tâche classique de prétraitement de texte avec nltk consiste à reti
 ## 3) keyword_test
 À partir de la liste de mots obtenue il est maintenant possible de rechercher la présence du mot clef demandé. Pour ce faire, j'ai créé la fonction keyword_test retournant une liste contenant les noms de tous les articles d'intérêts, c'est à dire des articles présentant le mot clef au moins le nombre souhaité de fois dans leurs 500 premiers mots. 
 
-J'ai choisi de traiter les 500 premiers mots de l'articles et non pas l'ensemble du contenu textule afin de me traiter un nombre fixe de mots pour chaque articles (évitant ainsi de biaiser le résultat à cause de différences de contenu textuel pour des articles différents, un article de 30 pages ayant bien plus de chance de contenir un mot donné qu'un article de 3 pages) et pour traiter une liste de mot qui contient systématiquement l'abstract. 
+J'ai choisi de traiter les 500 premiers mots de l'articles et non pas l'ensemble du contenu textuel afin de traiter un nombre fixe de mots pour chaque articles (évitant ainsi de biaiser le résultat à cause de différences importantes dans la quantité de texte, un article de 30 pages ayant bien plus de chance de contenir un mot donné qu'un article de 3 pages) et pour traiter une liste de mot qui contient systématiquement l'abstract. 
 
 De plus, plutôt que partir du texte traité, j'ai décidé d'inclure dans cette troisième fonction les deux fonctions définies précédemment, ce qui m'a évité de devoir remonter à l'article à partir de son contenu textuel. Le fait d'inclure les deux fonctions précédente m'a en effet permis de partir de la liste d'articles présents dans le dossier, ce qui facilite grandement la tâche. 
 
