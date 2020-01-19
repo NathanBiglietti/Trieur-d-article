@@ -28,20 +28,26 @@ Pendant mes recherches, je suis tombé dans un forum (https://www.developpez.net
     reconstruct some of those structures by guessing from its positioning, but there's nothing guaranteed to
     work. Ugly, I know. Again, PDF is evil."
 
+Mon niveau en programmation ne me permettant pas de jouer avec le diable mais ne voyant aucun intérêt à un programme qui m'obligerais à convertir préalablement les pdf en txt avec un convertisseur en ligne pour ensuite devoir routrouver les pdfs correspondant aux fichiers txt mis dans le dossier (autant lire les abstracts si c'est pour faire tout ça), j'ai finalement décidé de subtiliser une fonction trouvé sur un autre forum (https://stackoverflow.com/questions/25665/python-module-for-converting-pdf-to-text) que j'ai légèrement adapté afin de le rendre plus compréhensible.
+
+La fonction se présente comme il suit : 
 ```
-def pdfparser(data):
+def pdfparser(article):
     #extrait le contenu textuel d'un pdf 
-    fp = open(data, 'rb')
-    rsrcmgr = PDFResourceManager()
+    fp = open(article, 'rb')
+    manager = PDFResourceManager()
     retstr = io.StringIO()
     laparams = LAParams()
-    device = TextConverter(rsrcmgr, retstr, laparams=laparams)
-    interpreter = PDFPageInterpreter(rsrcmgr, device)
+    device = TextConverter(manager, retstr, laparams=laparams)
+    interpreter = PDFPageInterpreter(manager, device)
     for page in PDFPage.get_pages(fp):
         interpreter.process_page(page)
-        data =  retstr.getvalue()
-    return data
+        texte_brut =  retstr.getvalue()
+    return texte_brut
 ```
+Pour faire simple, pdfparser ouvre un article dont on lui indique le path en argument, pour ensuite interpréter page par page le pdf et enfin retourner le texte brut. La fonction "TextConverter" permet ici de spécifier dans la fonction "PDFPageInterpreter" le mode d'interprétation des pages analysées, indiquant que l'on souhaite extraire le contenu textuel du pdf. Par ailleurs, l'objet retstr indique ici que l'on souhaite retourner une chaine de caractères (string). 
+
+Pour être tout à fait honnête avec vous, le rôle des autres arguments nécessaires au fonctionnement de "TextConverter" (à savoir "manager" et "laparams") reste pour moi assez obscur. Peu d'informations sont en effet disponibles sur internet, à part des examples ne m'avançant pas à grand chose, ce qui a limité ma compréhension des fonctions de PDFMiner dans la limite du temps imparti. J'ai néanmoins préféré poursuivre avec une fonction plus ou moins obscure plutôt que de changer de projet. 
 
 ## 2) pre_traitement
 Le contenu textuel extrait par pdfparser est un texte brut dont la structure ne permet pas encore le traitement souhaité. En effet, il présente : 
