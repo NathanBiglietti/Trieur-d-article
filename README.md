@@ -16,6 +16,16 @@ L'intérêt du programme que j'ai créé est donc de pouvoir y voir clair dans c
 Une fonction a été créée pour chacune de ces tâches. J'expliquerais donc le fonctionnement de chacune d'entre elles avant de commenter les instructions et l'exécution du programme et de conclure.
 
 ## 1) pdfparser
+La majorité des articles scientifiques disponibles sur internet étant disponible au format pdf, j'ai décidé de travailler à partir de ce format.
+Une difficulté s'est rapidement présentée à moi. Les pdfs sont en effet des fichiers binaires et non pas des fichiers textes, ce qui a pour conséquence que le contenu textuel d'un pdf n'est pas directement accessible. 
+
+Pendant mes recherches, je suis tombé dans un forum (https://www.developpez.net/forums/d1599202/autres-langages/python/general-python/extraire-contenu-d-pdf-python/) sur ce message qui a failli me faire abandonner l'idée de travailler directement à partir du pdf : 
+
+```
+PDF is evil. Although it is called a PDF "document", it's nothing like Word or HTML document. PDF is more like a graphic representation. PDF contents are just a bunch of instructions that tell how to place the stuff at each exact position on a display or paper. In most cases, it has no logical structure such as sentences or paragraphs and it cannot adapt itself when the paper size changes. PDFMiner attempts to reconstruct some of those structures by guessing from its positioning, but there's nothing guaranteed to work. Ugly, I know. Again, PDF is evil.
+```
+
+
 ```
 def pdfparser(data):
     #extrait le contenu textuel d'un pdf 
