@@ -13,7 +13,7 @@ L'intérêt du programme que j'ai créé est donc de pouvoir y voir clair dans c
 3. Retenir les articles contenant *n* fois le mot *x* dans leurs 500 premiers mots 
 4. Créer un dossier à partir des articles retenus
 
-Une fonction a été créée pour chacune de ces tâches. J'expliquerais donc le fonctionnement de chacune d'entre elles avant de commenter les instructions et l'exécution du programme et de conclure.
+Une fonction a été créée pour chacune de ces tâches. J'expliquerais donc le fonctionnement de chacune d'entre elles avant de commenter les instructions, d'en donner un exemple d'utilisation et de conclure.
 
 ## 1) pdfparser
 La majorité des articles scientifiques disponibles sur internet étant disponible au format pdf, j'ai décidé de travailler à partir de ce format.
@@ -164,7 +164,12 @@ articles_dans_dossier = str(articles_recherchés)
 print("Un nouveau dossier "+ keyword + " contenant les articles " + articles_dans_dossier + " a été créé dans votre dossier A_LIRE.")
 print("Merci, et à bientot !")
 ```
-## 6) Execution 
+## 6) Exemple d'utilisation  
+Pour tester le fonctionnement du programme, j'ai utilisé un faux dossier "A_LIRE" ne contenant que quatre article afin de m'éviter des temps d'exécution trop longs. 
+
+Lorsqu'on exécute le programme, une première instruction apparait comme prévu dans la console : 
+
+
 
 ## Conclusion
 
@@ -175,5 +180,7 @@ retirer les stop words + 500 mots + words.lower (sur tout les mots, plus efficac
 pb des premières pages 
 
 pb du path 
+
+question du pluriel
 
 crée un doc vide aussi si y'a pas d'artciles correspondant
