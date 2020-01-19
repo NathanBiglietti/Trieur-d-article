@@ -173,7 +173,7 @@ Lorsqu'on exécute le programme, une première instruction apparait comme prévu
 
 ![](exemple/console_1.png)
 
-Ici, je sais que deux articles parmi les quatre traitent de méta-éthique. On peut donc utiliser le mot "moral" comme mot clef afin de les sélectionner. Le mot clef doit être écrit sans guillemets et sans espace. On peut ensuite appuyer sur entrée pour valider l'information. Dès lors, une deuxième instruction s'affiche :  
+Ici, j'ai choisi d'utiliser le mot "moral" comme mot clef afin de trouver les articles traitant de la moralité. Le mot clef doit être écrit sans guillemets et sans espace. On peut ensuite appuyer sur entrée pour valider l'information. Dès lors, une deuxième instruction s'affiche :  
 
 ![](exemple/console_2.png)
 
@@ -181,7 +181,7 @@ J'ai choisi ici une occurence de 2. Une occurence de 1 peut en effet parfois bia
 
 ![](exemple/console_3.png)
 
-Lorsqu'on réouvre notre dossier "A_LIRE", on trouve effectivement un nouveau dossier nommé "moral" dans lequel se trouve les deux articles en question : 
+Lorsqu'on réouvre notre dossier "A_LIRE", on trouve effectivement un nouveau dossier nommé "moral" dans lequel se trouve les copies des deux articles en question : 
 
 ![](exemple/dossier_post.png)
 
@@ -190,15 +190,14 @@ Dans cet exemple, le trieur fonctionne parfaitement, les deux articles sélectio
 Mission accomplie.
 
 ## Conclusion
+Bien qu'étant assez satisfait d'avoir réussi à construire un programme fonctionnel en partant de zéro en programmation et sans avoir eu à rabotter mon projet, il est important d'évoquer ici ses limites. 
 
-conclure sur la réalisation et le fonctionnement du programme, évoquer ses limites
+Tout d'abbord, le programme est assez lent. Dans l'exemple précédent, pour lequel nous ne traitions que quatre articles, le temps d'exécution était d'environ 15 secondes. À ce rythme là, traiter une cinquantaine d'article pourrait prendre presque trois minutes. Plusieurs tâches auraient pu être optimisées afin de palier à ce problème. Tout d'abbord, il aurait été peut être plus intelligent de retenir les 500 premiers mots en amont. Ici en effet, pdfparser() et pre_traitement() traitent l'ensemble du contenu textuel, alors que seul les 500 premiers mots sont nécessaires. De plus dans la fonction pre_traitement(), la méthode .lower() est appliquée à l'ensemble des mots de la liste, alors que seuls les mots en majuscule sont d'intérêt ici. Une boucle if aurait donc été plus judicieux. 
 
-retirer les stop words + 500 mots + words.lower (sur tout les mots, plus efficace boucle if) = plus de rapidité 
+Par ailleurs, une autre étape de pré-traitement aurait été nécessaire. Sur le dosssier donné dans l'exemple, lorsque j'indique en mot clef le mot "emotion" seul un article est inclu dans le dossier, alors que deux traitent des émotions. En effet, un des deux articles en question n'emploi le terme qu'au pluriel ("emotions"), celui ci étant traité comme différent de sa version au singulier. Il aurait été ainsi judicieux d'ajouter une étape à la fonction pre_traitement() permettant le retrait des "s" à la fin des mots au pluriel. 
 
-pb des premières pages 
+On peut également noter le fait que le programme crée un dossier vide lorsqu'aucun article ne correspond aux critères. On aurait pu ici utiliser create_final_folder() dans une boucle if afin d'éviter ce problème. 
 
-pb du path 
+Enfin vous l'aurez remarqué j'ai défini assez égoïstement le chemin absolu, de telles sorte que le programme n'est pas directement utilisable en dehors du cercle restreint des propriétaires d'un macbook air. Il aurait pour cela été plus judicieux d'également demander le chemin absolu dans la console. 
 
-question du pluriel
-
-crée un doc vide aussi si y'a pas d'artciles correspondant
+Faute de temps, je n'ai pas pu régler ces quelques problèmes. Reste que le programme est fonctionnel et reste utile à tout.e étudiant.e dont le dossier A_LIRE ressemble au logement d'une personne agée atteinte du syndrome de Diogène. 
