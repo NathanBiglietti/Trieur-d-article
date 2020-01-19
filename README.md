@@ -13,7 +13,7 @@ L'intérêt du programme que j'ai créé est donc de pouvoir y voir clair dans c
 3. Retenir les articles contenant *n* fois le mot *x* dans leurs 500 premiers mots 
 4. Créer un dossier à partir des articles retenus
 
-Une fonction a été créée pour chacune de ces tâches. J'expliquerais donc le fonctionnement de chacune d'entre elles avant de commenter l'exécution du programme et de conclure.
+Une fonction a été créée pour chacune de ces tâches. J'expliquerais donc le fonctionnement de chacune d'entre elles avant de commenter les instructions et l'exécution du programme et de conclure.
 
 ## 1) pdfparser
 ```
@@ -33,12 +33,13 @@ def pdfparser(data):
 
 ## 2) pre_traitement
 Le contenu textuel extrait par pdfparser est un texte brut dont la structure ne permet pas encore le traitement souhaité. En effet, il présente : 
-1. Des signes de ponctuations. Ceux ci ne sont d’aucun intérêt pour la tâche qui nous occupe.
+1. Des signes de ponctuations et d'autres symboles non alphabétiques. Ceux ci ne sont d’aucun intérêt pour la tâche qui nous occupe.
 2. Des mots dont la certaines lettres sont en majuscule. Ces mots seront traités comme différents que leur version tout en minuscule, ce qui biaiserait la tâche que nus souhaitons accomplir. 
 3. Le texte est présenté comme un bloc (une seule chaine de caractère ou string), alors que nous souhaitons cibler un mot en particulier.
 
-Il est donc nécessaire de traiter le texte brut pour le transformer en une liste de mots (isolés les uns des autres comme différentes chaines de caractères contenus dans la liste) tout en minuscule et sans ponctuation. Pour ce faire, j’ai utilisé le package nltk (Natural Language Toolkit). 
+Il est donc nécessaire de traiter le texte brut pour le transformer en une liste de mots (isolés les uns des autres comme différentes chaines de caractères contenus dans la liste) tout en minuscule et ne présentant aucun symbole non alphabétique. Pour ce faire, j’ai utilisé le package nltk (Natural Language Toolkit). 
 
+La fonction se présente de la façon suivante : 
 ```
 def pre_traitement(text) :
     #transforme le texte en liste de mots en minuscule
@@ -49,8 +50,11 @@ def pre_traitement(text) :
         words.append(word.lower())
     return words
 ```
+Ici, la fonction "RegexpTokenizer" nous permet ici de désigner un mode de tokénisation du texte brut. Autrement dit, elle nous permet d'indiquer quelle règle sera suivie de façon systématique pour créer les sous chaines de caractères de la nouvelle liste sur la base du texte brut (qui on le rappelle, consiste en une seule et unique chaine de caractères). Ici l’argument "w+" permet d’indiquer que l’on ne retiendra que les mots, ce qui nous permet non seulement d'isoler les mots les uns des autres (chacun correspodant alors à une chaine de caractère), mais également de retirer les symboles non alphabétiques. En utilisant ce tokenizer que nous avons défini en appliquant au texte la méthode .tokenize() liée au tokenizer, nous pouvons alors créer une liste de mots isolés les uns des autres.
 
-Une autre tâche classique de prétraitement de texte avec nltk consiste à retirer les stopwords, c'est à dire les mots courant tels que "ce", "un", "ou", qui ne sont pas porteurs de sens. Bien qu'ils ne soient pas utiles à notre tâche, il ne me semblait pas fondamentalement nécessaire de retier ces stopwords. De plus, je souhaitais que le programme puisse fonctionner indépendament de la langue de l'article, ce qui aurait largement compliqué la tâche si j'avais souhaité retirer les stopwords. 
+À ce stade, on obtient donc une liste contenant des mots dont certains peuvent toujours contenir des lettres majuscules. Pour palier à ce problème, j'ai créé une boucle for ajoutant grace à la méthode .append() à une liste vide ("words") les mots de la liste "tokens" mis en minuscule grace à la méthode .lower(). La fonction retourne alors une liste de mots tour en minuscule.
+
+Une autre tâche classique de prétraitement de texte avec nltk consiste à retirer les stopwords, c'est à dire les mots courant tels que "ce", "un", "ou", qui ne sont pas porteurs de sens. Bien qu'ils ne soient pas utiles à notre tâche, il ne me semblait pas fondamentalement nécessaire de retier ces stopwords. De plus, je souhaitais que le programme puisse fonctionner autant sur des articles en anglais que sur des articles en français, ce qui aurait rendu compliqué la tâche si j'avais souhaité retirer les stopwords, puisqu'il aurait été nécessaire de détecter la langue afin de savoir quelle liste de stopwords utiliser, ou alors de retirer les stopwords des deux langues, ce qui pourrait potentiellement biaiser la tâche (par exemple si je cherche des articles en français sur le sens de l'agentivité dans le sport collectif et que j'ulitise le mot "but" comme mot clef, celui si serait retiré de la liste parce qu'il s'agit d'un stopword anglais). 
 
 ## 3) keyword_test
 
@@ -117,4 +121,7 @@ print("Merci, et à bientot !")
 
 conclure sur la réalisation et le fonctionnement du programme, évoquer ses limites
 
-retirer les stop words
+retirer les stop words + 500 mots + words.lower (sur tout les mots, plus efficace boucle if) = plus de rapidité 
+
+pb des premières pages 
+
