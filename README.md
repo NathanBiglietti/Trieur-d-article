@@ -99,11 +99,11 @@ def keyword_test(liste_d_articles, key, nombre):
         compteur = 0
     return articles_recherchés
 ```
-Cette fonction nécessite trois arguments : une liste contenant les noms de l'ensemble des articles à analyser (liste_d_articles), un mot clef (key, string), et une occuence souhaitée du mot clef (nombre, integer). 
-Dans une première boucle for, keyword_test appelle pour chaque articles les fonctions pdfparser puis pre_traitement pour ensuite créer une liste contenant les 500 premiers mots du texte traité. Ensuite, cette liste est analysée dans une seconde boucle for. Pour chaque mot de la liste, cette dernière boucle teste sa correspondance avec le mot clef. Si le mot correspond, on ajoute +1 à un compteur définit précédement et initialisé à 0. Lorsque le compteur atteint le nombre recherché, on peut alors ajouter l'article analysé à la liste d'article recherchés (articles_recherchés) initialisée précédemment comme une liste vide, pour ensuite remettre le compteur à zéro, et recommencer le processus sur le prochain article de la liste, et ce jusqu'à ce que tous les articles aient été traités. 
+Cette fonction nécessite trois arguments : une liste contenant les noms de l'ensemble des articles à analyser (liste_d_articles), un mot clef (key, string), et une occurence souhaitée du mot clef (nombre, integer). 
+Dans une première boucle for, keyword_test() appelle pour chaque article les fonctions pdfparser puis pre_traitement pour ensuite créer une liste contenant les 500 premiers mots du texte traité. Ensuite, cette liste est analysée dans une seconde boucle for. Pour chaque mot de la liste, cette dernière boucle teste sa correspondance avec le mot clef. Si le mot correspond, on ajoute +1 à un compteur définit précédement et initialisé à 0. Lorsque le compteur atteint le nombre recherché (compteur == nombre), on peut alors ajouter l'article analysé à la liste d'article recherchés (articles_recherchés) initialisée précédemment comme une liste vide, pour ensuite remettre le compteur à zéro, et recommencer le processus sur le prochain article de la liste, et ce jusqu'à ce que tous les articles aient été traités. 
 
 ## 4) create_final_folder
-Grace à keyword_test, on obtient donc une liste contenant les noms des  articles d'intérêt. À partir de là, il ne nous manque plus qu'à créer un dossier conenant ces articles. Pour ce faire, j'ai utilisé le module os qui permet très facilement les manipulations de fichiers et de dossier. 
+Grace à keyword_test(), on obtient donc une liste contenant les noms des  articles d'intérêt. À partir de là, il ne nous reste plus qu'à créer un dossier contenant ces articles. Pour ce faire, j'ai utilisé le module os qui permet très facilement les manipulations de fichiers et de dossiers. 
 
 La fonction tient en 6 petites lignes : 
 ```
@@ -118,15 +118,15 @@ def create_final_folder(articles_recherchés):
 ```
 Avec la fonction "os.mkdir()", on crée un nouveau dossier portant le nom du mot clef dans le répertoire de travail. Ici "try :" et "except OSError :" nous permettent de ne créer un dossier que lorsque celui ci n'existe pas encore dans le répertoire de travail. Si par exemple j'ai déjà utilisé le programme pour trouver les articles contenant au moins 2 fois le mot "emotion" et que je réitère la même demande au programme, un message d'erreur s'affichera. 
 
-Ensuite, j'ai créé une boucle for qui pour chaque article de la liste articles_recherchés va en créer une copie grâce à la fonction shutil.copy(), copie qui sera placée dans l'article nouvellement créé. L'argument " keyword + "/" + "copie_" + article " correspond à une façon d'indiquer systématiquement le bon path peu importe l'article et le mot clef. 
+Ensuite, j'ai créé une boucle for qui pour chaque article de la liste articles_recherchés va en créer une copie grâce à la fonction shutil.copy(), copie qui sera placée dans le dossier nouvellement créé. L'argument " keyword + "/" + "copie_" + article " correspond à une façon d'indiquer systématiquement le bon chemin relatif peu importe l'article et le mot clef. 
 
 ## 5) Instructions 
-Il ne nous reste plus maintenant qu'à utiliser les trois fonctions définies. Avant celà, trois informations sont nécessaire. Il nous faut une liste contenant les noms des articles à traiter, un mot clef et une occurence du mot clef.
+Il ne nous reste plus maintenant qu'à utiliser les trois fonctions définies. Avant celà, trois informations sont nécessaires. Il nous faut une liste contenant les noms des articles à traiter, un mot clef et une occurence du mot clef.
 
 Plutôt que d'indiquer à chaque exécution le chemin absolu à suivre, j'ai décidé de l'indiquer dans le programme de manière systématique. Pour obtenir la liste des noms des articles à traiter, j'ai donc procédé de la façon suivante: 
 ```
 path = "/Users/macbookair/Desktop/A_LIRE"
-#chemin absolu vers le dossier contanant les articles au format .pdf
+#chemin absolu vers le dossier contenant les articles au format .pdf
 
 os.chdir(path)
 #change le répertoire de travail, le dossier A_LIRE étant maintenant le répertoire de travail
@@ -136,9 +136,9 @@ liste_de_pdf = glob.glob("*.pdf")
 ```
 Je m'excuse par avance aux utilisateurs et utilisatrices de Windows et de Linux, mais j'ai indiqué ici un chemin absolu de mac. Si par chance vous avez comme moi le luxe de disposer d'un macbook air, il vous suffit de renommer votre dossier contenant vos articles "A_LIRE" et de le placer sur votre bureau. Si ce n'est pas le cas, le code n'est pas en tant que tel utilisable puisque le path ne correspond pas. Il faudra alors indiquer dans le programme le chemin absolu adéquat dirigeant vers le dossier, tout en prennant également soin de nommer ce dernier "A_LIRE". 
 
-Lorsque c'est fait, la fonction "os.chdir()" appliquée au chemin absolu indiqué changera le répertoire de travail pour le placer sur le dossier A_LIRE. Cela permet travailler facilement à l'intérieur du dossier sans à avoir à réindiquer systématiquement le chemin absolu. 
+Lorsque c'est fait, la fonction "os.chdir()" appliquée au chemin absolu indiqué changera le répertoire de travail pour le dossier A_LIRE. Cela permet travailler facilement à l'intérieur du dossier sans à avoir à réindiquer systématiquement le chemin absolu. 
 
-Ensuite, la fonction "glob.glob()" permet créer une liste contenant les fichiers de notre dossier A_LIRE tout en ne retenant que les fichiers pdf, graçe à l'argument ".pdf" (il manque l'étoile mais c'est juste que si je la mets ça fout tout le texte en l'air en le mettant en italique). Par ce moyen, tout fichier autre que pdf qui se serait malencontreusement glissé dans le dossier ne sera pas analysé. Ainsi, même si vous avez par mégarde ajouté au dossier une photo de votre chat ou le film que vous avez téléchargé illégalement hier soir, ces derniers ne feront pas bugger le programme. 
+Ensuite, la fonction "glob.glob()" permet créer une liste contenant les fichiers de notre dossier A_LIRE tout en ne retenant que les fichiers pdf, graçe à l'argument ".pdf" (il manque l'étoile mais c'est juste que si je la mets ça fout tout le texte en l'air en le mettant en italique). Par ce moyen, tout fichier autre que pdf qui se serait malencontreusement glissé dans le dossier ne sera pas analysé. Ainsi, même si vous avez par mégarde ajouté au dossier une photo de votre chat ou le film que vous avez téléchargé illégalement hier soir, ces derniers ne feront pas bugger le programme puisque seuls les pdfs seront traités. 
 
 Pour le mot clef et l'occurence de ce dernier, j'ai procédé de la façon suivante :
 ```
@@ -148,7 +148,7 @@ keyword = input("Entrez le mot clef :")
 occurence = int(input("Entrez l'occurence souhaitée du mot clef :"))
 #demande l'occurence souhaitée du mot clef
 ```
-La fonction input() permet ici de demander dans la console la valeur que l'on souhaite assigner à aux objets keyword et occurence, tout en imprimant les instructions (indiquées comme argument de input(), entre guillemets). En outre, la fonction int() permet simplement de transformer la chaine de caractère indiqué ("2" par exemple) en nombre entier (2), les valeurs rentrées dans la console étant toujours des chaines de caractères. 
+La fonction input() permet ici de demander dans la console la valeur que l'on souhaite assigner à aux objets keyword et occurence, tout en imprimant les instructions (indiquées comme argument de input(), entre guillemets). En outre, la fonction int() permet simplement de transformer la chaine de caractère indiqué ("2" par exemple) en nombre entier (2), les valeurs entrées dans la console étant toujours des chaines de caractères. 
 
 On a à ce stade toutes les valeurs nécessaires à l'exécution des fonctions définies plus tôt : 
 ```
@@ -164,6 +164,8 @@ articles_dans_dossier = str(articles_recherchés)
 print("Un nouveau dossier "+ keyword + " contenant les articles " + articles_dans_dossier + " a été créé dans votre dossier A_LIRE.")
 print("Merci, et à bientot !")
 ```
+L'utilisation de la fonction str() est ici nécessaire car une liste ne peut pas être concaténée à une chaine de caractères. Il est ainsi nécessaire de transformer la liste articles_recherchés en chaine de caractères. 
+
 ## 6) Exemple d'utilisation  
 Pour tester le fonctionnement du programme, j'ai utilisé un faux dossier "A_LIRE" contenant quatre articles afin de m'éviter des temps de traitement trop long et afin de traiter uniquement des articles dont j'ai une bonne idée du contenu. Avant l'utilisation du programme, le dossier est comme il suit : 
 
@@ -187,17 +189,15 @@ Lorsqu'on réouvre notre dossier "A_LIRE", on trouve effectivement un nouveau do
 
 Dans cet exemple, le trieur fonctionne parfaitement, les deux articles sélectionnés par le programme parlant en effet de méta-éthique, tandis que les deux autres parlent de philosophie des émotions. 
 
-Mission accomplie.
-
 ## Conclusion
-Bien qu'étant assez satisfait d'avoir réussi à construire un programme fonctionnel en partant de zéro en programmation et sans avoir eu à rabotter mon projet, il est important d'évoquer ici ses limites. 
+Bien qu'étant assez satisfait d'avoir réussi à construire un programme fonctionnel en partant de zéro en programmation et sans avoir eu à raboter mon projet, il est important d'évoquer ici ses limites. 
 
-Tout d'abbord, le programme est assez lent. Dans l'exemple précédent, pour lequel nous ne traitions que quatre articles, le temps d'exécution était d'environ 15 secondes. À ce rythme là, traiter une cinquantaine d'article pourrait prendre presque trois minutes. Plusieurs tâches auraient pu être optimisées afin de palier à ce problème. Tout d'abbord, il aurait été peut être plus intelligent de retenir les 500 premiers mots en amont. Ici en effet, pdfparser() et pre_traitement() traitent l'ensemble du contenu textuel, alors que seul les 500 premiers mots sont nécessaires. De plus dans la fonction pre_traitement(), la méthode .lower() est appliquée à l'ensemble des mots de la liste, alors que seuls les mots en majuscule sont d'intérêt ici. Une boucle if aurait donc été plus judicieux. 
+Tout d'abord, le programme est assez lent. Dans l'exemple précédent, pour lequel nous ne traitions que quatre articles, le temps d'exécution était d'environ 15 secondes. À ce rythme là, traiter une cinquantaine d'article pourrait prendre presque trois minutes. Plusieurs tâches auraient pu être optimisées afin de pallier à ce problème. Tout d'abord, il aurait été peut être plus intelligent de retenir les 500 premiers mots en amont. Ici en effet, pdfparser() et pre_traitement() traitent l'ensemble du contenu textuel, alors que seul les 500 premiers mots sont nécessaires. De plus, dans la fonction pre_traitement(), la méthode .lower() est appliquée à l'ensemble des mots de la liste, alors que seuls les mots en majuscule sont d'intérêt ici. L'emploi d'une boucle if aurait donc été plus judicieux. 
 
-Par ailleurs, une autre étape de pré-traitement aurait été nécessaire. Sur le dosssier donné dans l'exemple, lorsque j'indique en mot clef le mot "emotion" seul un article est inclu dans le dossier, alors que deux traitent des émotions. En effet, un des deux articles en question n'emploi le terme qu'au pluriel ("emotions"), celui ci étant traité comme différent de sa version au singulier. Il aurait été ainsi judicieux d'ajouter une étape à la fonction pre_traitement() permettant le retrait des "s" à la fin des mots au pluriel. 
+Par ailleurs, une autre étape de pré-traitement du texte aurait été nécessaire. Pour le dosssier donné dans l'exemple, lorsque j'indique en mot clef le mot "emotion" seul un article est inclu dans le dossier, alors que deux traitent des émotions. En effet, un des deux articles en question n'emploie le terme qu'au pluriel ("emotions"), ce dernier étant traité comme différent de sa version au singulier. Il aurait été ainsi judicieux d'ajouter une étape à la fonction pre_traitement() permettant le retrait des "s" à la fin des mots au pluriel. 
 
 On peut également noter le fait que le programme crée un dossier vide lorsqu'aucun article ne correspond aux critères. On aurait pu ici utiliser create_final_folder() dans une boucle if afin d'éviter ce problème. 
 
-Enfin vous l'aurez remarqué j'ai défini assez égoïstement le chemin absolu, de telles sorte que le programme n'est pas directement utilisable en dehors du cercle restreint des propriétaires d'un macbook air. Il aurait pour cela été plus judicieux d'également demander le chemin absolu dans la console. 
+Enfin vous l'aurez remarqué j'ai défini assez égoïstement le chemin absolu, de telle sorte que le programme n'est pas directement utilisable en dehors du cercle restreint des propriétaires d'un macbook air. Il aurait pour cela été plus judicieux d'également demander le chemin absolu dans la console. 
 
-Faute de temps, je n'ai pas pu régler ces quelques problèmes. Reste que le programme est fonctionnel et reste utile à tout.e étudiant.e dont le dossier A_LIRE ressemble au logement d'une personne agée atteinte du syndrome de Diogène. 
+Faute de temps, je n'ai pas pu régler ces quelques problèmes. Reste que le programme est fonctionnel et utile à toute personne dont le dossier A_LIRE ressemble au logement d'une personne agée atteinte du syndrome de Diogène. 
