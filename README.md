@@ -103,7 +103,9 @@ Cette fonction nécessite trois arguments : une liste contenant les noms de l'en
 Dans une première boucle for, keyword_test appelle pour chaque articles les fonctions pdfparser puis pre_traitement pour ensuite créer une liste contenant les 500 premiers mots du texte traité. Ensuite, cette liste est analysée dans une seconde boucle for. Pour chaque mot de la liste, cette dernière boucle teste sa correspondance avec le mot clef. Si le mot correspond, on ajoute +1 à un compteur définit précédement et initialisé à 0. Lorsque le compteur atteint le nombre recherché, on peut alors ajouter l'article analysé à la liste d'article recherchés (articles_recherchés) initialisée précédemment comme une liste vide, pour ensuite remettre le compteur à zéro, et recommencer le processus sur le prochain article de la liste, et ce jusqu'à ce que tous les articles aient été traités. 
 
 ## 4) create_final_folder
+Grace à keyword_test, on obtient donc une liste contenant les noms des  articles d'intérêt. À partir de là, il ne nous manque plus qu'à créer un dossier conenant ces articles. Pour ce faire, j'ai utilisé le module os qui permet très facilement les manipulations de fichiers et de dossier. 
 
+La fonction tient en 6 petites lignes : 
 ```
 def create_final_folder(articles_recherchés):
     #crée un nouveau dossier dans le dossier A_LIRE contenant des copies des articles de la liste
@@ -114,6 +116,9 @@ def create_final_folder(articles_recherchés):
     for article in articles_recherchés:
         shutil.copy(article, keyword + "/" + "copie_" + article)
 ```
+Avec la fonction "os.mkdir()", on crée un nouveau dossier portant le nom du mot clef dans le répertoire de travail. Ici "try :" et "except OSError :" nous permettent de ne créer un dossier que lorsque celui ci n'existe pas encore dans le répertoire de travail. Si par exemple j'ai déjà utilisé le programme pour trouver les articles contenant au moins 2 fois le mot "emotion" et que je réitère la même demande au programme, un message d'erreur s'affichera. 
+
+Ensuite, j'ai créé une boucle for qui pour chaque article de la liste articles_recherchés va en créer une copie grâce à la fonction shutil.copy(), copie qui sera placée dans l'article nouvellement créé. L'argument " keyword + "/" + "copie_" + article " correspond à une façon d'indiquer systématiquement le bon path peu importe l'article et le mot clef. 
 
 ## 5) Instructions 
 
