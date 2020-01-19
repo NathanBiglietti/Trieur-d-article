@@ -32,6 +32,12 @@ def pdfparser(data):
 ```
 
 ## 2) pre_traitement
+Le contenu textuel extrait par pdfparser est un texte brut dont la structure ne permet pas encore le traitement souhaité. En effet, il présente : 
+1. Des signes de ponctuations. Ceux ci ne sont d’aucun intérêt pour la tâche qui nous occupe.
+2. Des mots dont la certaines lettres sont en majuscule. Ces mots seront traités comme différents que leur version tout en minuscule, ce qui biaiserait la tâche que nus souhaitons accomplir. 
+3. Le texte est présenté comme un bloc (une seule chaine de caractère ou string), alors que nous souhaitons cibler un mot en particulier.
+
+Il est donc nécessaire de traiter le texte brut pour le transformer en une liste de mots (isolés les uns des autres comme différentes chaines de caractères contenus dans la liste) tout en minuscule et sans ponctuation. Pour ce faire, j’ai utilisé le package nltk (Natural Language Toolkit). 
 
 ```
 def pre_traitement(text) :
@@ -44,11 +50,13 @@ def pre_traitement(text) :
     return words
 ```
 
+Une autre tâche classique de prétraitement de texte avec nltk consiste à retirer les stopwords, c'est à dire les mots courant tels que "ce", "un", "ou", qui ne sont pas porteurs de sens. Bien qu'ils ne soient pas utiles à notre tâche, il ne me semblait pas fondamentalement nécessaire de retier ces stopwords. De plus, je souhaitais que le programme puisse fonctionner indépendament de la langue de l'article, ce qui aurait largement compliqué la tâche si j'avais souhaité retirer les stopwords. 
+
 ## 3) keyword_test
 
 ```
 def keyword_test(liste_d_articles, key, nombre):
-    #crée une liste contenant tous les acticles dont l'occurence du mot clef dans les 500 premiers mots est supérieure au nombre souhaité 
+    #crée une liste contenant tous les acticles dont l'occurence du mot clef dans les 500 premiers mots est supérieure au         nombre souhaité 
     articles_recherchés = []
     compteur = 0
     for article in liste_d_articles :  
@@ -77,7 +85,7 @@ def create_final_folder(articles_recherchés):
         shutil.copy(article, keyword + "/" + "copie_" + article)
 ```
 
-## 5) Exécution 
+## 5) Instructions 
 
 ```
 path = "/Users/macbookair/Desktop/A_LIRE"
@@ -103,7 +111,10 @@ articles_dans_dossier = str(articles_recherchés)
 print("Un nouveau dossier "+ keyword + " contenant les articles " + articles_dans_dossier + " a été créé dans votre dossier A_LIRE.")
 print("Merci, et à bientot !")
 ```
+## 6) Execution 
 
 ## Conclusion
 
 conclure sur la réalisation et le fonctionnement du programme, évoquer ses limites
+
+retirer les stop words
