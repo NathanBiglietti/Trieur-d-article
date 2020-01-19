@@ -5,7 +5,7 @@ L'idée de ce programme m'est venue en constatant les conséquences de mon tél�
 En effet, au fur et à mesure, s'accumulent dans un dossier "à lire" des articles dont je n'ai plus aucune idée du contenu. 
 Parfois cependant, lorsqu'un temps libre se présente devant moi ou qu'une soif de connaissance m'assailli à 2h du matin alors que je devrais dormir, il m'arrive d'ouvrir cette caverne d'Alibaba qu'est ce dossier "à lire". 
 Le problème est le suivant : à ce moment précis, ma curiosité se restreint à une certaine gamme limité de thématiques. 
-Pour trouver la perle rare correspondant à mes attentes parmis les inombrables articles du dossier, il est alors nécessaire d'ouvrir un par un les articles, d'en lire l'astract jusqu'à ce qu'on trouve le bon. Une tâche ennuyeuse et rébarbative qui parfois (surtout à 2h du matin), me démotive finalement de la lecture. Automatiser celle ci s'est donc présenté très natuerellement comme une nécessité. 
+Pour trouver la perle rare correspondant à mes attentes parmis les inombrables articles du dossier, il est alors nécessaire d'ouvrir un par un les articles, d'en lire l'abstract jusqu'à ce qu'on trouve le bon. Une tâche ennuyeuse et rébarbative qui parfois (surtout à 2h du matin), me démotive finalement de la lecture. Automatiser celle ci s'est donc présenté très naturellement comme une nécessité. 
 
 L'intérêt du programme que j'ai créé est donc de pouvoir y voir clair dans cet amoncellement d'articles qu'un cerveau paresseux n'a aucun intérêt à trier. Pour ce faire, l'idée était de générer au sein du dossier "à lire" des sous dossiers contenant tous les articles présentant dans leurs premiers 500 mots un occurence donnée (*n*) d'un mot clef donné (*x*). À partir de ces deux informations renseignées dans la console, le programme doit donc : 
 1. Extraire le contenu textuel d'articles donnés au format pdf
@@ -16,8 +16,8 @@ L'intérêt du programme que j'ai créé est donc de pouvoir y voir clair dans c
 Une fonction a été créée pour chacune de ces tâches. J'expliquerais donc le fonctionnement de chacune d'entre elles avant de commenter les instructions, d'en donner un exemple d'utilisation et de conclure.
 
 ## 1) pdfparser
-La majorité des articles scientifiques disponibles sur internet étant disponible au format pdf, j'ai décidé de travailler à partir de ce format.
-Une difficulté s'est rapidement présentée à moi. Les pdfs sont en effet des fichiers binaires et non pas des fichiers textes, ce qui a pour conséquence que le contenu textuel d'un pdf n'est pas directement accessible. 
+La majorité des articles scientifiques disponibles sur internet étant disponibles au format pdf, j'ai décidé de travailler à partir de ce format.
+Une difficulté s'est rapidement présentée à moi. Les pdfs sont en effet des fichiers binaires et non pas des fichiers textes, ce qui a pour conséquence que leur contenu textuel n'est pas directement accessible. 
 
 Pendant mes recherches, je suis tombé dans un forum (https://www.developpez.net/forums/d1599202/autres-langages/python/general-python/extraire-contenu-d-pdf-python/) sur ce message qui a failli me faire abandonner l'idée de travailler directement à partir du pdf : 
 
@@ -28,7 +28,7 @@ Pendant mes recherches, je suis tombé dans un forum (https://www.developpez.net
     reconstruct some of those structures by guessing from its positioning, but there's nothing guaranteed to
     work. Ugly, I know. Again, PDF is evil."
 
-Mon niveau en programmation ne me permettant pas de jouer avec le diable mais ne voyant aucun intérêt à un programme qui m'obligerais à convertir préalablement les pdf en txt avec un convertisseur en ligne pour ensuite devoir routrouver les pdfs correspondant aux fichiers txt mis dans le dossier (autant lire les abstracts si c'est pour faire tout ça), j'ai finalement décidé de subtiliser une fonction trouvé sur un autre forum (https://stackoverflow.com/questions/25665/python-module-for-converting-pdf-to-text) que j'ai légèrement adapté afin de le rendre plus compréhensible.
+Mon niveau en programmation ne me permettant pas de jouer avec le diable, mais ne voyant aucun intérêt à un programme qui m'obligerais à convertir préalablement les pdf en txt avec un convertisseur en ligne pour ensuite devoir routrouver les pdfs correspondant aux fichiers txt mis dans le dossier (autant lire les abstracts si c'est pour faire tout ça), j'ai finalement décidé de subtiliser une fonction trouvé sur un autre forum (https://stackoverflow.com/questions/25665/python-module-for-converting-pdf-to-text) que j'ai légèrement adapté afin de le rendre plus compréhensible.
 
 La fonction se présente comme il suit : 
 ```
@@ -51,7 +51,7 @@ Pour être tout à fait honnête avec vous, le rôle des autres arguments néces
 
 ## 2) pre_traitement
 Le contenu textuel extrait par pdfparser est un texte brut dont la structure ne permet pas encore le traitement souhaité. En effet, il présente : 
-1. Des signes de ponctuations et d'autres symboles non alphabétiques. Ceux ci ne sont d’aucun intérêt pour la tâche qui nous occupe.
+1. Des signes de ponctuation et d'autres symboles non alphabétiques. Ceux ci ne sont d’aucun intérêt pour la tâche qui nous occupe.
 2. Des mots dont la certaines lettres sont en majuscule. Ces mots seront traités comme différents que leur version tout en minuscule, ce qui biaiserait la tâche que nus souhaitons accomplir. 
 3. Le texte est présenté comme un bloc (une seule chaine de caractère ou string), alors que nous souhaitons cibler un mot en particulier.
 
@@ -68,14 +68,14 @@ def pre_traitement(text) :
         words.append(word.lower())
     return words
 ```
-Ici, la fonction "RegexpTokenizer" nous permet ici de désigner un mode de tokénisation du texte brut. Autrement dit, elle nous permet d'indiquer quelle règle sera suivie de façon systématique pour créer les sous chaines de caractères de la nouvelle liste sur la base du texte brut (qui on le rappelle, consiste en une seule et unique chaine de caractères). Ici l’argument "w+" permet d’indiquer que l’on ne retiendra que les mots, ce qui nous permet non seulement d'isoler les mots les uns des autres (chacun correspodant alors à une chaine de caractère), mais également de retirer les symboles non alphabétiques. En utilisant ce tokenizer que nous avons défini en appliquant au texte la méthode .tokenize() liée au tokenizer, nous pouvons alors créer une liste de mots isolés les uns des autres.
+Ici, la fonction "RegexpTokenizer" nous permet de désigner un mode de tokénisation du texte brut. Autrement dit, elle nous permet d'indiquer quelle règle sera suivie de façon systématique pour créer les sous chaines de caractères de la nouvelle liste sur la base du texte brut (qui on le rappelle, consiste en une seule et unique chaine de caractères). Ici l’argument "w+" permet d’indiquer que l’on ne retiendra que les mots, ce qui nous permet non seulement d'isoler les mots les uns des autres (chacun correspondant alors à une chaine de caractère), mais également de retirer les symboles non alphabétiques. En utilisant ce tokenizer que nous avons défini en appliquant au texte la méthode .tokenize() liée au tokenizer, nous pouvons alors créer une liste de mots isolés les uns des autres.
 
 À ce stade, on obtient donc une liste contenant des mots dont certains peuvent toujours contenir des lettres majuscules. Pour palier à ce problème, j'ai créé une boucle for ajoutant grace à la méthode .append() à une liste vide ("words") les mots de la liste "tokens" mis en minuscule grace à la méthode .lower(). La fonction retourne alors une liste de mots tour en minuscule.
 
 Une autre tâche classique de prétraitement de texte avec nltk consiste à retirer les stopwords, c'est à dire les mots courant tels que "ce", "un", "ou", qui ne sont pas porteurs de sens. Bien qu'ils ne soient pas utiles à notre tâche, il ne me semblait pas fondamentalement nécessaire de retier ces stopwords. De plus, je souhaitais que le programme puisse fonctionner autant sur des articles en anglais que sur des articles en français, ce qui aurait rendu compliqué la tâche si j'avais souhaité retirer les stopwords, puisqu'il aurait été nécessaire de détecter la langue afin de savoir quelle liste de stopwords utiliser, ou alors de retirer les stopwords des deux langues, ce qui pourrait potentiellement biaiser la tâche (par exemple si je cherche des articles en français sur le sens de l'agentivité dans le sport collectif et que j'ulitise le mot "but" comme mot clef, celui si serait retiré de la liste parce qu'il s'agit d'un stopword anglais). 
 
 ## 3) keyword_test
-À partir de la liste de mots obtenue il est maintenant possible de rechercher la présence du mot clef demandé. Pour ce faire, j'ai créé la fonction keyword_test retournant une liste contenant les noms de tous les articles d'intérêts, c'est à dire des articles présentant le mot clef au moins le nombre souhaité de fois dans ses 500 premiers mots. 
+À partir de la liste de mots obtenue il est maintenant possible de rechercher la présence du mot clef demandé. Pour ce faire, j'ai créé la fonction keyword_test retournant une liste contenant les noms de tous les articles d'intérêts, c'est à dire des articles présentant le mot clef au moins le nombre souhaité de fois dans leurs 500 premiers mots. 
 
 J'ai choisi de traiter les 500 premiers mots de l'articles et non pas l'ensemble du contenu textule afin de me traiter un nombre fixe de mots pour chaque articles (évitant ainsi de biaiser le résultat à cause de différences de contenu textuel pour des articles différents, un article de 30 pages ayant bien plus de chance de contenir un mot donné qu'un article de 3 pages) et pour traiter une liste de mot qui contient systématiquement l'abstract. 
 
