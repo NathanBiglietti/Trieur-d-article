@@ -165,11 +165,29 @@ print("Un nouveau dossier "+ keyword + " contenant les articles " + articles_dan
 print("Merci, et à bientot !")
 ```
 ## 6) Exemple d'utilisation  
-Pour tester le fonctionnement du programme, j'ai utilisé un faux dossier "A_LIRE" ne contenant que quatre article afin de m'éviter des temps d'exécution trop longs. 
+Pour tester le fonctionnement du programme, j'ai utilisé un faux dossier "A_LIRE" contenant quatre articles afin de m'éviter des temps de traitement trop long et afin de traiter uniquement des articles dont j'ai une bonne idée du contenu. Avant l'utilisation du programme, le dossier est comme il suit : 
+
+![](exemple/dossier_pre.png)
 
 Lorsqu'on exécute le programme, une première instruction apparait comme prévu dans la console : 
 
+![](exemple/console_1.png)
 
+Ici, je sais que deux articles parmi les quatre traitent de méta-éthique. On peut donc utiliser le mot "moral" comme mot clef afin de les sélectionner. Le mot clef doit être écrit sans guillemets et sans espace. On peut ensuite appuyer sur entrée pour valider l'information. Dès lors, une deuxième instruction s'affiche :  
+
+![](exemple/console_2.png)
+
+J'ai choisi ici une occurence de 2. Une occurence de 1 peut en effet parfois biaiser le résultat, certains articles pouvant utiliser le mot clef dans leurs 500 premiers mots sans pour autant qu'il s'agisse réellement d'un mot important du texte (par exemple ici dans "the moral of this story" par exemple). Lorsqu'on appuie à nouveau sur entrée, le programme exécute la tâche. Au bout d'une quinzaine de secondes, un dernier message nous indique la création d'un nouveau dossier contenant deux des articles :
+
+![](exemple/console_3.png)
+
+Lorsqu'on réouvre notre dossier "A_LIRE", on trouve effectivement un nouveau dossier nommé "moral" dans lequel se trouve les deux articles en question : 
+
+![](exemple/dossier_post.png)
+
+Dans cet exemple, le trieur fonctionne parfaitement, les deux articles sélectionnés par le programme parlant en effet de méta-éthique, tandis que les deux autres parlent de philosophie des émotions. 
+
+Mission accomplie.
 
 ## Conclusion
 
